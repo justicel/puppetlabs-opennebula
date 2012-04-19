@@ -238,8 +238,6 @@ class opennebula::controller (
     mode => "0640",
     require => Package[$controller_package],
   }
- 
-  ########################
   # Setup SSH trust keys #
   ########################
   
@@ -284,6 +282,7 @@ class opennebula::controller (
     hasrestart => true,
     enable => true,
     ensure => running,
+    restart => "service opennebula stop && sleep 2 && service opennebula start",
     require => Package[$controller_package],
     subscribe => Class["opennebula::oned_conf"],
   }

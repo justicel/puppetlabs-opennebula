@@ -25,11 +25,14 @@ NETWORK_ADDRESS = <%= resource[:network_address] %>
 <% end %>
 
 # Context information
-<% resource[:context].each { |key,value| %>
-<%= key.upcase %> = <%= value %>
-<% } %>
-EOF
+<% if resource[:context] do %>
+  <% resource[:context].each { |key,value| %>
+    <%= key.upcase %> = <%= value %>
+  <% } %>
+<% end %>
 
+EOF
+    require 'pp'
     tempfile = template.result(binding)
     file.write(tempfile)
     file.close

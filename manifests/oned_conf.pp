@@ -95,4 +95,13 @@ class opennebula::oned_conf (
     mode => "0644",
     require => Package[$controller_package],
   }
+
+  file { ["$vm_dir", "$scripts_remote_dir", "$image_repository_path"]:
+    ensure => directory,
+    owner => "root",
+    group => "root",
+    mode => "0755",
+    require => Package[$controller_package],
+  }
+
 }
