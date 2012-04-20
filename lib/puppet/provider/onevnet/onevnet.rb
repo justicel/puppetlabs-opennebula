@@ -44,9 +44,9 @@ EOF
     onevnet "delete", resource[:name]
   end
 
-  # Return a list of existing networks using the onevnet -x list command
+  # Return a list of existing networks using the onevnet list -x command
   def self.onevnet_list
-    xml = REXML::Document.new(`onevnet -x list`)
+    xml = REXML::Document.new(`onevnet list -x`)
     onevnets = []
     xml.elements.each("VNET_POOL/VNET/NAME") do |element|
       onevnets << element.text
@@ -70,7 +70,7 @@ EOF
       hash[:name] = vnet
 
       # Open onevnet xml output using REXML
-      xml = REXML::Document.new(`onevnet -x show #{vnet}`)
+      xml = REXML::Document.new(`onevnet show -x #{vnet}`)
 
       # Traverse the XML document and populate the common attributes
       xml.elements.each("VNET/TYPE") { |element|

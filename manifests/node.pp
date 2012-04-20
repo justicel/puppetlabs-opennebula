@@ -29,6 +29,12 @@ class opennebula::node (
   # Install node package
   package { $node_package:
     ensure => installed,
+    require => Apt::Force[$node_package]
+  }
+
+  apt::force { $node_package:
+      release => "unstable",
+      require => Apt::Source["debian_unstable"],
   }
   
   # Install ssh keys from controller

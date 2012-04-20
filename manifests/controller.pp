@@ -214,6 +214,12 @@ class opennebula::controller (
 
   package { $controller_package:
     ensure => installed,
+    require => Apt::Force[$controller_package]
+  }
+
+  apt::force { $controller_package:
+      release => "unstable",
+      require => Apt::Source["debian_unstable"],
   }
 
   # Authentication file
@@ -287,24 +293,24 @@ class opennebula::controller (
     subscribe => Class["opennebula::oned_conf"],
   }
 
-  ############
-  # clusters #
-  ############
-  if($cluster_purge == true) {
-    resources { "onecluster":
-      purge => true,
-    }
-  }
-  # default cluster should always exist
-  onecluster { "default":
-    ensure => present,
-  }
-  
-  if($clusters) {
-    onecluster { $clusters: 
-      ensure => present,
-    }
-  }
+#  ############
+#  # clusters #
+#  ############
+#  if($cluster_purge == true) {
+#    resources { "onecluster":
+#      purge => true,
+#    }
+#  }
+#  # default cluster should always exist
+#  onecluster { "default":
+#    ensure => present,
+#  }
+#  
+#  if($clusters) {
+#    onecluster { $clusters: 
+#      ensure => present,
+#    }
+#  }
   
   #########
   # Hosts #
@@ -357,11 +363,6 @@ class opennebula::controller (
   #############################
   # Contextualization scripts #
   #############################
-  file { "/var/lib/one":
-    owner => oneadmin,
-    recurse => true,
-    ensure => directory
-  }
   file { "/var/lib/one/context":
     ensure => directory,
     purge => true,
@@ -377,7 +378,7 @@ class opennebula::controller (
   ################
   # Hook Scripts #
   ################
-  file { "/usr/share/one/hooks/puppet":
+  file { "/var/lib/one/remotes/hooks/puppet":
     ensure => directory,
     mode => "0755",
     owner => "root",

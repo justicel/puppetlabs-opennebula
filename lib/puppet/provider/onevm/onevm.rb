@@ -86,9 +86,9 @@ EOF
     onevm "delete", resource[:name]
   end
 
-  # Return a list of existing VM's using the onevm -x list command
+  # Return a list of existing VM's using the onevm list -x command
   def self.onevm_list
-    xml = REXML::Document.new(`onevm -x list`)
+    xml = REXML::Document.new(`onevm list -x`)
     onevm = []
     xml.elements.each("VM_POOL/VM/NAME") do |element|
       onevm << element.text
@@ -112,7 +112,7 @@ EOF
       hash[:name] = vm
 
       # Open onevm xml output using REXML
-      xml = REXML::Document.new(`onevm -x show #{vm}`)
+      xml = REXML::Document.new(`onevm show -x #{vm}`)
 
       # Traverse the XML document and populate the common attributes
       xml.elements.each("VM/MEMORY") { |element|

@@ -98,7 +98,7 @@ class opennebula::oned_conf (
 
   file { ["$vm_dir", "$scripts_remote_dir", "$image_repository_path"]:
     ensure => directory,
-    owner => "root",
+    owner => "oneadmin",
     group => "root",
     mode => "0755",
     require => Package[$controller_package],

@@ -33,4 +33,8 @@ command.
   newparam(:tm_mad) do
     desc "Transfer Driver"
   end
+
+  newparam(:vnm_mad) do
+    desc "Virtual network Driver"
+  end
 end

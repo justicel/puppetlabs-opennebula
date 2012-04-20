@@ -7,7 +7,7 @@ Puppet::Type.type(:onehost).provide(:onehost) do
 
   def create
     onehost "create", resource[:name], resource[:im_mad], resource[:vm_mad],
-      resource[:tm_mad]
+      resource[:tm_mad], resource[:vnm_mad]
   end
 
   def destroy
@@ -15,7 +15,7 @@ Puppet::Type.type(:onehost).provide(:onehost) do
   end
 
   def self.onehost_list
-    xml = REXML::Document.new(`onehost -x  list`)
+    xml = REXML::Document.new(`onehost list -x`)
     onehosts = []
     xml.elements.each("HOST_POOL/HOST/NAME") do |element|
       onehosts << element.text
@@ -34,7 +34,7 @@ Puppet::Type.type(:onehost).provide(:onehost) do
       hash[:provider] = self.name.to_s
       hash[:name] = host
 
-      xml = REXML::Document.new(`onehost -x show #{host}`)
+      xml = REXML::Document.new(`onehost show -x #{host}`)
       xml.elements.each("HOST/IM_MAD") { |element| hash[:im_mad] = element.text }
       xml.elements.each("HOST/VM_MAD") { |element| hash[:vm_mad] = element.text }
       xml.elements.each("HOST/TM_MAD") { |element| hash[:tm_mad] = element.text }

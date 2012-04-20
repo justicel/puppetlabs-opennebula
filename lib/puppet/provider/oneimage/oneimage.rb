@@ -38,9 +38,9 @@ EOF
     oneimage "delete", resource[:name]
   end
 
-  # Return a list of existing networks using the onevnet -x list command
+  # Return a list of existing networks using the onevnet list -x command
   def self.oneimage_list
-    xml = REXML::Document.new(`oneimage -x list`)
+    xml = REXML::Document.new(`oneimage list -x`)
     oneimages = []
     xml.elements.each("IMAGE_POOL/IMAGE/NAME") do |element|
       oneimages << element.text
@@ -64,7 +64,7 @@ EOF
       hash[:name] = image
 
       # Open onevnet xml output using REXML
-      xml = REXML::Document.new(`oneimage -x show #{image}`)
+      xml = REXML::Document.new(`oneimage show -x #{image}`)
 
       # Traverse the XML document and populate the common attributes
       xml.elements.each("IMAGE/TEMPLATE/DESCRIPTION") { |element|
