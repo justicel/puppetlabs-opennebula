@@ -357,6 +357,11 @@ class opennebula::controller (
   #############################
   # Contextualization scripts #
   #############################
+  file { "/var/lib/one":
+    owner => oneadmin,
+    recurse => true,
+    ensure => directory
+  }
   file { "/var/lib/one/context":
     ensure => directory,
     purge => true,
