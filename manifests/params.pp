@@ -48,7 +48,7 @@ class opennebula::params {
       $controller_package = "opennebula"
       $controller_service = "opennebula"
       $controller_user = "oneadmin"
-      $controller_group = "cloud"
+      $controller_group = "oneadmin"
       $oneadmin_home = "/var/lib/one/"
 
       # opennebula::oned_config params (called by opennebula::controler)

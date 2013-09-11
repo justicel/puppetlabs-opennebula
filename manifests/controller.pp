@@ -218,8 +218,8 @@ class opennebula::controller (
   }
 
   apt::force { $controller_package:
-      release => "unstable",
-      require => Apt::Source["debian_unstable"],
+      release => "stable",
+      require => Apt::Source['opennebula'],
   }
 
   # Authentication file

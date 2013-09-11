@@ -33,8 +33,8 @@ class opennebula::node (
   }
 
   apt::force { $node_package:
-      release => "unstable",
-      require => Apt::Source["debian_unstable"],
+      release => "stable",
+      require => Apt::Source['opennebula'],
   }
   
   # Install ssh keys from controller
